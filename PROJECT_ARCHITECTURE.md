@@ -431,8 +431,7 @@ users
 ├─ last_name
 ├─ is_active
 ├─ created_at
-├─ updated_at
-└─ last_login
+└─ updated_at
 
 roles
 ├─ id (PRIMARY KEY)
@@ -443,8 +442,7 @@ roles
 
 user_roles (Many-to-Many)
 ├─ user_id (FK to users.id)
-├─ role_id (FK to roles.id)
-└─ assigned_at
+└─ role_id (FK to roles.id)
 ```
 
 #### Quiz Management
