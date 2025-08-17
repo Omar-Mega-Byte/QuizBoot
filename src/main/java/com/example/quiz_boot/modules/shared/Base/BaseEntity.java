@@ -9,9 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import lombok.Data;
 
+@Data
 @MappedSuperclass
-
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,4 @@ public class BaseEntity {
     protected void onUpdate() {
         updatedAt = Instant.now();
     }
-
-    // getters and setters...
 }
