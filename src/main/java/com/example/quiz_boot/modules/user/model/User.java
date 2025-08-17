@@ -1,6 +1,6 @@
 package com.example.quiz_boot.modules.user.model;
 
-import com.example.quiz_boot.shared.Base.BaseEntity;
+import com.example.quiz_boot.modules.shared.Base.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
