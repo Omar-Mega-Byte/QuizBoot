@@ -160,146 +160,260 @@ src/main/java/com/example/quiz_boot/
 │  ├─ ModulithConfig.java
 │  └─ CacheConfig.java
 │
-├─ modules/                         # Spring Modulith modules
-│  │
-│  ├─ user/                        # User Management Module
-│  │  ├─ api/
-│  │  │  ├─ UserController.java
-│  │  │  ├─ AuthController.java
-│  │  │  └─ ProfileController.java
-│  │  ├─ domain/
-│  │  │  ├─ User.java
-│  │  │  ├─ Role.java
-│  │  │  ├─ Permission.java
-│  │  │  └─ UserProfile.java
-│  │  ├─ service/
-│  │  │  ├─ UserService.java
-│  │  │  ├─ AuthService.java
-│  │  │  └─ ProfileService.java
-│  │  ├─ repository/
-│  │  │  ├─ UserRepository.java
-│  │  │  ├─ RoleRepository.java
-│  │  │  └─ PermissionRepository.java
-│  │  └─ dto/
-│  │     ├─ UserDto.java
-│  │     ├─ LoginRequest.java
-│  │     ├─ RegisterRequest.java
-│  │     └─ UserResponse.java
-│  │
-│  ├─ quiz/                        # Quiz Management Module
-│  │  ├─ api/
-│  │  │  ├─ QuizController.java
-│  │  │  ├─ QuestionController.java
-│  │  │  └─ CategoryController.java
-│  │  ├─ domain/
-│  │  │  ├─ Quiz.java
-│  │  │  ├─ Question.java
-│  │  │  ├─ Answer.java
-│  │  │  ├─ Category.java
-│  │  │  └─ QuestionType.java (enum)
-│  │  ├─ service/
-│  │  │  ├─ QuizService.java
-│  │  │  ├─ QuestionService.java
-│  │  │  └─ CategoryService.java
-│  │  ├─ repository/
-│  │  │  ├─ QuizRepository.java
-│  │  │  ├─ QuestionRepository.java
-│  │  │  ├─ AnswerRepository.java
-│  │  │  └─ CategoryRepository.java
-│  │  └─ dto/
-│  │     ├─ QuizDto.java
-│  │     ├─ QuestionDto.java
-│  │     ├─ AnswerDto.java
-│  │     └─ QuizSummaryDto.java
-│  │
-│  ├─ session/                     # Session Management Module
-│  │  ├─ api/
-│  │  │  ├─ SessionController.java
-│  │  │  └─ SubmissionController.java
-│  │  ├─ domain/
-│  │  │  ├─ QuizSession.java
-│  │  │  ├─ SessionAnswer.java
-│  │  │  ├─ SessionState.java (enum)
-│  │  │  └─ TimerConfig.java
-│  │  ├─ service/
-│  │  │  ├─ SessionService.java
-│  │  │  ├─ TimerService.java
-│  │  │  └─ SubmissionService.java
-│  │  ├─ repository/
-│  │  │  ├─ SessionRepository.java
-│  │  │  └─ SessionAnswerRepository.java
-│  │  └─ dto/
-│  │     ├─ SessionDto.java
-│  │     ├─ SubmissionDto.java
-│  │     └─ SessionProgressDto.java
-│  │
-│  ├─ scoring/                     # Scoring & Analytics Module
-│  │  ├─ api/
-│  │  │  ├─ ScoringController.java
-│  │  │  └─ AnalyticsController.java
-│  │  ├─ domain/
-│  │  │  ├─ Score.java
-│  │  │  ├─ Analytics.java
-│  │  │  ├─ Progress.java
-│  │  │  └─ ScoreCalculationRule.java
-│  │  ├─ service/
-│  │  │  ├─ ScoringService.java
-│  │  │  ├─ AnalyticsService.java
-│  │  │  └─ ReportService.java
-│  │  ├─ repository/
-│  │  │  ├─ ScoreRepository.java
-│  │  │  ├─ AnalyticsRepository.java
-│  │  │  └─ ProgressRepository.java
-│  │  └─ dto/
-│  │     ├─ ScoreDto.java
-│  │     ├─ AnalyticsDto.java
-│  │     └─ ReportDto.java
-│  │
-│  ├─ notification/                # Notification Module
-│  │  ├─ api/
-│  │  │  └─ NotificationController.java
-│  │  ├─ domain/
-│  │  │  ├─ Notification.java
-│  │  │  ├─ NotificationType.java (enum)
-│  │  │  └─ EmailTemplate.java
-│  │  ├─ service/
-│  │  │  ├─ NotificationService.java
-│  │  │  ├─ EmailService.java
-│  │  │  └─ EventListener.java
-│  │  ├─ repository/
-│  │  │  └─ NotificationRepository.java
-│  │  └─ dto/
-│  │     ├─ NotificationDto.java
-│  │     └─ EmailDto.java
-│  │
-│  └─ shared/                      # Shared Components
-│     ├─ dto/
-│     │  ├─ ApiResponse.java
-│     │  ├─ PageResponse.java
-│     │  └─ ErrorResponse.java
-│     ├─ exception/
-│     │  ├─ GlobalExceptionHandler.java
-│     │  ├─ BusinessException.java
-│     │  ├─ ResourceNotFoundException.java
-│     │  └─ ValidationException.java
-│     ├─ util/
-│     │  ├─ DateTimeUtils.java
-│     │  ├─ ValidationUtils.java
-│     │  └─ SecurityUtils.java
-│     ├─ event/
-│     │  ├─ QuizCompletedEvent.java
-│     │  ├─ UserRegisteredEvent.java
-│     │  └─ SessionExpiredEvent.java
-│     └─ constants/
-│        ├─ AppConstants.java
-│        ├─ SecurityConstants.java
-│        └─ MessageConstants.java
+├─ user/                           # User Management Module
+│  ├─ model/
+│  │  ├─ User.java
+│  │  ├─ Role.java
+│  │  ├─ Permission.java
+│  │  └─ UserProfile.java
+│  ├─ controller/
+│  │  ├─ AuthController.java
+│  │  ├─ UserController.java
+│  │  └─ ProfileController.java
+│  ├─ service/
+│  │  ├─ UserService.java
+│  │  ├─ AuthService.java
+│  │  └─ ProfileService.java
+│  ├─ repository/
+│  │  ├─ UserRepository.java
+│  │  ├─ RoleRepository.java
+│  │  └─ PermissionRepository.java
+│  ├─ dto/
+│  │  ├─ request/
+│  │  │  ├─ LoginRequest.java
+│  │  │  ├─ RegisterRequest.java
+│  │  │  └─ UpdateProfileRequest.java
+│  │  └─ response/
+│  │     ├─ UserResponse.java
+│  │     ├─ AuthResponse.java
+│  │     └─ ProfileResponse.java
+│  ├─ validation/
+│  │  ├─ UserValidator.java
+│  │  ├─ PasswordValidator.java
+│  │  └─ EmailValidator.java
+│  ├─ mapper/
+│  │  └─ UserMapper.java
+│  └─ exception/
+│     ├─ UserNotFoundException.java
+│     ├─ InvalidCredentialsException.java
+│     └─ UserAlreadyExistsException.java
 │
-└─ aspect/                         # Cross-cutting concerns
+├─ quiz/                           # Quiz Management Module
+│  ├─ model/
+│  │  ├─ Quiz.java
+│  │  ├─ Question.java
+│  │  ├─ Answer.java
+│  │  ├─ Category.java
+│  │  └─ QuestionType.java (enum)
+│  ├─ controller/
+│  │  ├─ QuizController.java
+│  │  ├─ QuestionController.java
+│  │  └─ CategoryController.java
+│  ├─ service/
+│  │  ├─ QuizService.java
+│  │  ├─ QuestionService.java
+│  │  └─ CategoryService.java
+│  ├─ repository/
+│  │  ├─ QuizRepository.java
+│  │  ├─ QuestionRepository.java
+│  │  ├─ AnswerRepository.java
+│  │  └─ CategoryRepository.java
+│  ├─ dto/
+│  │  ├─ request/
+│  │  │  ├─ QuizCreateRequest.java
+│  │  │  ├─ QuestionCreateRequest.java
+│  │  │  └─ CategoryCreateRequest.java
+│  │  └─ response/
+│  │     ├─ QuizResponse.java
+│  │     ├─ QuestionResponse.java
+│  │     ├─ QuizSummaryResponse.java
+│  │     └─ CategoryResponse.java
+│  ├─ validation/
+│  │  ├─ QuizValidator.java
+│  │  ├─ QuestionValidator.java
+│  │  └─ CategoryValidator.java
+│  ├─ mapper/
+│  │  ├─ QuizMapper.java
+│  │  ├─ QuestionMapper.java
+│  │  └─ CategoryMapper.java
+│  └─ exception/
+│     ├─ QuizNotFoundException.java
+│     ├─ QuestionNotFoundException.java
+│     └─ InvalidQuizStateException.java
+│
+├─ session/                        # Session Management Module
+│  ├─ model/
+│  │  ├─ QuizSession.java
+│  │  ├─ SessionAnswer.java
+│  │  ├─ SessionState.java (enum)
+│  │  └─ TimerConfig.java
+│  ├─ controller/
+│  │  ├─ SessionController.java
+│  │  └─ SubmissionController.java
+│  ├─ service/
+│  │  ├─ SessionService.java
+│  │  ├─ TimerService.java
+│  │  └─ SubmissionService.java
+│  ├─ repository/
+│  │  ├─ SessionRepository.java
+│  │  └─ SessionAnswerRepository.java
+│  ├─ dto/
+│  │  ├─ request/
+│  │  │  ├─ SessionStartRequest.java
+│  │  │  ├─ SubmissionRequest.java
+│  │  │  └─ AnswerSubmissionRequest.java
+│  │  └─ response/
+│  │     ├─ SessionResponse.java
+│  │     ├─ SessionProgressResponse.java
+│  │     └─ SubmissionResponse.java
+│  ├─ validation/
+│  │  ├─ SessionValidator.java
+│  │  └─ SubmissionValidator.java
+│  ├─ mapper/
+│  │  └─ SessionMapper.java
+│  └─ exception/
+│     ├─ SessionNotFoundException.java
+│     ├─ SessionExpiredException.java
+│     └─ InvalidSessionStateException.java
+│
+├─ scoring/                        # Scoring & Analytics Module
+│  ├─ model/
+│  │  ├─ Score.java
+│  │  ├─ Analytics.java
+│  │  ├─ Progress.java
+│  │  └─ ScoreCalculationRule.java
+│  ├─ controller/
+│  │  ├─ ScoringController.java
+│  │  └─ AnalyticsController.java
+│  ├─ service/
+│  │  ├─ ScoringService.java
+│  │  ├─ AnalyticsService.java
+│  │  └─ ReportService.java
+│  ├─ repository/
+│  │  ├─ ScoreRepository.java
+│  │  ├─ AnalyticsRepository.java
+│  │  └─ ProgressRepository.java
+│  ├─ dto/
+│  │  ├─ request/
+│  │  │  └─ ScoreCalculationRequest.java
+│  │  └─ response/
+│  │     ├─ ScoreResponse.java
+│  │     ├─ AnalyticsResponse.java
+│  │     ├─ ProgressResponse.java
+│  │     └─ ReportResponse.java
+│  ├─ validation/
+│  │  └─ ScoreValidator.java
+│  ├─ mapper/
+│  │  └─ ScoringMapper.java
+│  └─ exception/
+│     ├─ ScoreCalculationException.java
+│     └─ InvalidScoreException.java
+│
+├─ notification/                   # Notification Module
+│  ├─ model/
+│  │  ├─ Notification.java
+│  │  ├─ NotificationType.java (enum)
+│  │  └─ EmailTemplate.java
+│  ├─ controller/
+│  │  └─ NotificationController.java
+│  ├─ service/
+│  │  ├─ NotificationService.java
+│  │  ├─ EmailService.java
+│  │  └─ EventListenerService.java
+│  ├─ repository/
+│  │  └─ NotificationRepository.java
+│  ├─ dto/
+│  │  ├─ request/
+│  │  │  └─ NotificationRequest.java
+│  │  └─ response/
+│  │     └─ NotificationResponse.java
+│  ├─ validation/
+│  │  └─ NotificationValidator.java
+│  ├─ mapper/
+│  │  └─ NotificationMapper.java
+│  └─ exception/
+│     └─ NotificationException.java
+│
+├─ common/                         # Shared/Common Components
+│  ├─ dto/
+│  │  ├─ ApiResponse.java
+│  │  ├─ PageResponse.java
+│  │  ├─ ErrorResponse.java
+│  │  └─ BaseDto.java
+│  ├─ exception/
+│  │  ├─ GlobalExceptionHandler.java
+│  │  ├─ BusinessException.java
+│  │  ├─ ResourceNotFoundException.java
+│  │  ├─ ValidationException.java
+│  │  └─ BaseException.java
+│  ├─ validation/
+│  │  ├─ annotation/
+│  │  │  ├─ ValidEmail.java
+│  │  │  ├─ ValidPassword.java
+│  │  │  └─ ValidEnum.java
+│  │  └─ group/
+│  │     ├─ CreateValidation.java
+│  │     ├─ UpdateValidation.java
+│  │     └─ SubmitValidation.java
+│  ├─ util/
+│  │  ├─ DateTimeUtils.java
+│  │  ├─ ValidationUtils.java
+│  │  ├─ EncryptionUtils.java
+│  │  ├─ FileUtils.java
+│  │  └─ JsonUtils.java
+│  ├─ constants/
+│  │  ├─ AppConstants.java
+│  │  ├─ SecurityConstants.java
+│  │  ├─ MessageConstants.java
+│  │  ├─ ValidationMessages.java
+│  │  └─ ApiConstants.java
+│  ├─ enums/
+│  │  ├─ Status.java
+│  │  ├─ Priority.java
+│  │  └─ Grade.java
+│  └─ mapper/
+│     └─ BaseMapper.java
+│
+├─ security/                       # Security Components
+│  ├─ filter/
+│  │  ├─ JwtAuthenticationFilter.java
+│  │  └─ CorsFilter.java
+│  ├─ provider/
+│  │  ├─ JwtTokenProvider.java
+│  │  └─ CustomAuthenticationProvider.java
+│  ├─ service/
+│  │  ├─ UserDetailsServiceImpl.java
+│  │  └─ TokenService.java
+│  ├─ util/
+│  │  └─ SecurityUtils.java
+│  └─ exception/
+│     ├─ JwtAuthenticationEntryPoint.java
+│     └─ SecurityException.java
+│
+├─ event/                          # Domain Events & Listeners
+│  ├─ user/
+│  │  ├─ UserRegisteredEvent.java
+│  │  ├─ UserActivatedEvent.java
+│  │  └─ UserEventListener.java
+│  ├─ quiz/
+│  │  ├─ QuizPublishedEvent.java
+│  │  ├─ QuizCompletedEvent.java
+│  │  └─ QuizEventListener.java
+│  ├─ session/
+│  │  ├─ SessionStartedEvent.java
+│  │  ├─ SessionCompletedEvent.java
+│  │  ├─ SessionExpiredEvent.java
+│  │  └─ SessionEventListener.java
+│  └─ scoring/
+│     ├─ ScoreCalculatedEvent.java
+│     └─ ScoringEventListener.java
+│
+└─ aspect/                         # Cross-cutting Concerns (AOP)
    ├─ LoggingAspect.java
    ├─ SecurityAspect.java
    ├─ PerformanceAspect.java
-   └─ AuditAspect.java
+   ├─ AuditAspect.java
+   └─ ValidationAspect.java
 ```
 
 ## 🗄️ Database Design
