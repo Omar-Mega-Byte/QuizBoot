@@ -1,6 +1,7 @@
 package com.example.quiz_boot.modules.user.dto.response;
 
 import java.time.Instant;
+import java.util.Set;
 
 import lombok.Value;
 
@@ -17,6 +18,7 @@ public class UserResponseDto {
     String firstName;
     String lastName;
     boolean isActive;
+    Set<String> roles;
     Instant createdAt;
     Instant updatedAt;
 }

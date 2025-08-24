@@ -15,5 +15,6 @@ public class UserCreateDto {
     String password;
     String firstName;
     String lastName;
+    String role; // Role name: STUDENT, TEACHER, ADMIN
 
 }
