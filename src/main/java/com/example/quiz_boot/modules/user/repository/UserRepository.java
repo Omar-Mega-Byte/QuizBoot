@@ -14,4 +14,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByIsActive(boolean isActive);
 
+    // Validation helper methods
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByEmailAndIdNot(String email, Long id);
+
 }
