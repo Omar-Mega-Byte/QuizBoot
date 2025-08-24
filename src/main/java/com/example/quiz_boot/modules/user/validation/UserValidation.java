@@ -30,7 +30,7 @@ public class UserValidation {
             "^[a-zA-Z0-9._-]{3,20}$");
 
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&_])[A-Za-z\\d@$!%*?&_]{8,}$");
 
     private static final Pattern NAME_PATTERN = Pattern.compile(
             "^[a-zA-Z\\s]{2,30}$");
@@ -236,7 +236,7 @@ public class UserValidation {
         // Complexity validation
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
             errors.add(
-                    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)");
+                    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&_)");
         }
 
         // Common password check
