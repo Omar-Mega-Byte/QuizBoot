@@ -1,8 +1,10 @@
 package com.example.quiz_boot.modules.user.mapper;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.quiz_boot.modules.user.dto.request.UserCreateDto;
@@ -10,6 +12,7 @@ import com.example.quiz_boot.modules.user.dto.request.UserUpdateDto;
 import com.example.quiz_boot.modules.user.dto.response.UserResponseDto;
 import com.example.quiz_boot.modules.user.dto.response.UserSummaryDto;
 import com.example.quiz_boot.modules.user.model.User;
+import com.example.quiz_boot.modules.user.service.UserRoleService;
 
 /**
  * Simple mapper for User entity and DTOs
@@ -17,6 +20,9 @@ import com.example.quiz_boot.modules.user.model.User;
  */
 @Component
 public class UserMapper {
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     /**
      * Convert UserCreateDto to User entity
@@ -35,9 +41,11 @@ public class UserMapper {
 
     /**
      * Convert User entity to UserResponseDto
-     * Includes all non-sensitive user information
+     * Includes all non-sensitive user information and roles
      */
     public UserResponseDto toResponseDto(User user) {
+        Set<String> roles = userRoleService.getUserRoles(user.getId());
+
         return new UserResponseDto(
                 user.getId(),
                 user.getUsername(),
@@ -45,6 +53,7 @@ public class UserMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.isActive(),
+                roles,
                 user.getCreatedAt(),
                 user.getUpdatedAt());
     }
