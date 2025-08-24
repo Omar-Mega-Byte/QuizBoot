@@ -1,4 +1,4 @@
-package com.example.quiz_boot.shared.Base;
+package com.example.quiz_boot.modules.shared.Base;
 
 import java.time.Instant;
 
