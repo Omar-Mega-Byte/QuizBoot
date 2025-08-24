@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +90,51 @@ public class AuthService {
             logger.error("AUDIT: User registration failed - username: {}, error: {}",
                     userCreateDto.getUsername(), e.getMessage());
             throw new InvalidUserException("Registration failed: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Authenticates a user and returns their data.
+     *
+     * @param username The username of the user
+     * @param password The password of the user
+     * @return DTO containing the authenticated user data
+     */
+    public UserResponseDto loginUser(String username, String password) {
+        // Audit: Log login attempt
+        logger.info("AUDIT: User login attempt - username: {}", username != null ? username : "null");
+
+        try {
+            // Step 1: Validate credentials
+            userValidation.validateLoginCredentials(username, password);
+
+            // Step 2: Normalize username and fetch user
+            String normalizedUsername = username.trim().toLowerCase();
+            User user = userRepository.findByUsername(normalizedUsername)
+                    .orElseThrow(() -> {
+                        logger.warn("AUDIT: Login failed - user not found for username '{}'", normalizedUsername);
+                        return new InvalidUserException("Invalid username or password");
+                    });
+
+            // Step 3: Verify password
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                logger.warn("AUDIT: Login failed - incorrect password for username '{}'", normalizedUsername);
+                throw new InvalidUserException("Invalid username or password");
+            }
+
+            // Step 4: Audit successful login
+            logger.info("AUDIT: User login successful - ID: {}, username: {}", user.getId(), user.getUsername());
+            return userMapper.toResponseDto(user);
+
+        } catch (DataAccessException e) {
+            logger.error("AUDIT: Database operation failed during user login - username: {}, error: {}",
+                    username, e.getMessage());
+            throw new DatabaseOperationException("Database operation failed during login", e);
+        } catch (InvalidUserException e) {
+            throw e; // Already logged
+        } catch (Exception e) {
+            logger.error("AUDIT: User login failed - username: {}, error: {}", username, e.getMessage());
+            throw new InvalidUserException("Login failed: " + e.getMessage());
         }
     }
 }
