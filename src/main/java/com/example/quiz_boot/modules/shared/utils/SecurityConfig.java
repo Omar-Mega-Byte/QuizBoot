@@ -1,5 +1,6 @@
 package com.example.quiz_boot.modules.shared.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,14 +9,18 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Security configuration for the Quiz Boot application
- * Configures authentication, authorization, and password encoding
+ * Configures authentication, authorization, JWT, and password encoding
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -31,6 +36,7 @@ public class SecurityConfig {
                 // Configure authorization rules
                 .authorizeHttpRequests(auth -> auth
                         // Allow public access to authentication endpoints
+                        .requestMatchers("/").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
 
                         // Allow public access to health check and documentation
@@ -42,7 +48,11 @@ public class SecurityConfig {
                 // Configure session management (stateless for REST API)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(
-                                org.springframework.security.config.http.SessionCreationPolicy.STATELESS));
+                                org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
+
+                // Add JWT filter
+                .addFilterBefore(jwtAuthenticationEntryPoint, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }
