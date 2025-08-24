@@ -1,27 +1,19 @@
 package com.example.quiz_boot.modules.user.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 /**
- * DTO for creating a new user
+ * Immutable DTO for creating a new user
  * Contains only the fields that should be provided by the client when creating
  * a user
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
 public class UserCreateDto {
 
-    private String username;
-
-    private String email;
-
-    private String password;
-
-    private String firstName;
-
-    private String lastName;
+    String username;
+    String email;
+    String password;
+    String firstName;
+    String lastName;
 
 }

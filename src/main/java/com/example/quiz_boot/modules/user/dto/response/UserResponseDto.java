@@ -2,29 +2,21 @@ package com.example.quiz_boot.modules.user.dto.response;
 
 import java.time.Instant;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 /**
- * DTO for returning user information to clients
+ * Immutable DTO for returning user information to clients
  * Excludes sensitive information like passwords
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
 public class UserResponseDto {
 
-    private Long id;
-
-    private String username;
-    private String email;
-
-    private String firstName;
-    private String lastName;
-
-    private boolean isActive;
-
-    private Instant createdAt;
-    private Instant updatedAt;
+    Long id;
+    String username;
+    String email;
+    String firstName;
+    String lastName;
+    boolean isActive;
+    Instant createdAt;
+    Instant updatedAt;
 }

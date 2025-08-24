@@ -1,23 +1,17 @@
 package com.example.quiz_boot.modules.user.dto.request;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Value;
 
 /**
- * DTO for updating existing user information
+ * Immutable DTO for updating existing user information
  * Contains only fields that users should be allowed to modify
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
 public class UserUpdateDto {
 
-    private String email;
-
-    private String firstName;
-
-    private String lastName;
+    String email;
+    String firstName;
+    String lastName;
 
     // Note: Username is excluded to prevent confusion and maintain consistency
     // Note: Password updates should use a separate ChangePasswordDto for security
