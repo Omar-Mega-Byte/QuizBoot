@@ -280,7 +280,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 **Email**: [your.email@example.com](mailto:your.email@example.com)
+- 📧 **Email**: [your.email@example.com](mailto:omar@gmail.com)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/Omar-Mega-Byte/QuizBoot/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Omar-Mega-Byte/QuizBoot/discussions)
 
