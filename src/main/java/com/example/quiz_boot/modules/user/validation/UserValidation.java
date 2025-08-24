@@ -198,6 +198,23 @@ public class UserValidation {
     }
 
     /**
+     * Validates login credentials
+     */
+    public List<String> validateLoginCredentials(String username, String password) {
+        List<String> errors = new ArrayList<>();
+
+        if (username == null || username.trim().isEmpty()) {
+            errors.add("Username is required");
+        }
+
+        if (password == null || password.isEmpty()) {
+            errors.add("Password is required");
+        }
+
+        return errors;
+    }
+
+    /**
      * Validates password with security requirements
      */
     public List<String> validatePassword(String password) {
