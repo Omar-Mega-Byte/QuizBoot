@@ -779,7 +779,7 @@ Branch Strategy:
 Environments:
 ├─ Development
 │  ├─ Local MySQL
-│  ├─ H2 for testing
+│  ├─ Test database setup
 │  └─ Development profiles
 ├─ Staging
 │  ├─ Production-like setup
