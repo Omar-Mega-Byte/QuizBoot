@@ -49,7 +49,8 @@ public class JwtAuthenticationEntryPoint extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (Exception e) {
+        } catch (io.jsonwebtoken.JwtException
+                | org.springframework.security.core.userdetails.UsernameNotFoundException e) {
             jwtLogger.error("Cannot set user authentication: {}", e.getMessage());
         }
 
