@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -203,11 +204,75 @@ public class QuizService {
         }
 
         try {
-            List<Quiz> quizzes = quizRepository.findByCreatedBy(creatorId);
+            List<Quiz> quizzes = quizRepository.findByIsCreatorId(creatorId);
             return quizMapper.toSummaryDtoList(quizzes);
         } catch (Exception e) {
             logger.error("AUDIT: Quizzes retrieval by creator failed due to database error: {}", e.getMessage());
             throw new InvalidQuizException("Failed to retrieve quizzes by creator due to database error", e);
+        }
+    }
+
+    public Page<QuizSummaryDto> getQuizzesByCategory(Long categoryId, Pageable pageable) {
+        logger.debug("Retrieving paginated quizzes for category ID: {} with pagination: {}", categoryId, pageable);
+
+        if (categoryId == null || categoryId <= 0) {
+            throw new InvalidQuizException("Category ID must be valid");
+        }
+
+        try {
+            // Since repository doesn't have paginated method, we'll use a workaround
+            // First get all quizzes by category, then create a Page manually
+            List<Quiz> allQuizzes = quizRepository.findByCategoryId(categoryId);
+
+            // Calculate pagination manually
+            int start = (int) pageable.getOffset();
+            int end = Math.min((start + pageable.getPageSize()), allQuizzes.size());
+
+            if (start > allQuizzes.size()) {
+                // Return empty page if start is beyond the list
+                return Page.empty(pageable);
+            }
+
+            List<Quiz> pageContent = allQuizzes.subList(start, end);
+            List<QuizSummaryDto> dtoContent = quizMapper.toSummaryDtoList(pageContent);
+
+            return new PageImpl<>(dtoContent, pageable, allQuizzes.size());
+        } catch (Exception e) {
+            logger.error("AUDIT: Paginated quizzes retrieval by category failed due to database error: {}",
+                    e.getMessage());
+            throw new InvalidQuizException("Failed to retrieve paginated quizzes by category due to database error", e);
+        }
+    }
+
+    public Page<QuizSummaryDto> getQuizzesByCreator(Long creatorId, Pageable pageable) {
+        logger.debug("Retrieving paginated quizzes for creator ID: {} with pagination: {}", creatorId, pageable);
+
+        if (creatorId == null || creatorId <= 0) {
+            throw new InvalidQuizException("Creator ID must be valid");
+        }
+
+        try {
+            // Since repository doesn't have paginated method, we'll use a workaround
+            // First get all quizzes by creator, then create a Page manually
+            List<Quiz> allQuizzes = quizRepository.findByIsCreatorId(creatorId);
+
+            // Calculate pagination manually
+            int start = (int) pageable.getOffset();
+            int end = Math.min((start + pageable.getPageSize()), allQuizzes.size());
+
+            if (start > allQuizzes.size()) {
+                // Return empty page if start is beyond the list
+                return Page.empty(pageable);
+            }
+
+            List<Quiz> pageContent = allQuizzes.subList(start, end);
+            List<QuizSummaryDto> dtoContent = quizMapper.toSummaryDtoList(pageContent);
+
+            return new PageImpl<>(dtoContent, pageable, allQuizzes.size());
+        } catch (Exception e) {
+            logger.error("AUDIT: Paginated quizzes retrieval by creator failed due to database error: {}",
+                    e.getMessage());
+            throw new InvalidQuizException("Failed to retrieve paginated quizzes by creator due to database error", e);
         }
     }
 
@@ -267,7 +332,7 @@ public class QuizService {
         }
 
         try {
-            return quizRepository.findByCreatedBy(creatorId).size();
+            return quizRepository.findByIsCreatorId(creatorId).size();
         } catch (Exception e) {
             logger.error("Error counting quizzes for creator: {}", e.getMessage());
             return 0;
