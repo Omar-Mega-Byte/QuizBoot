@@ -11,8 +11,12 @@ import com.example.quiz_boot.modules.quiz.dto.request.QuizUpdateDto;
 import com.example.quiz_boot.modules.quiz.dto.response.QuizDetailDto;
 import com.example.quiz_boot.modules.quiz.dto.response.QuizResponseDto;
 import com.example.quiz_boot.modules.quiz.dto.response.QuizSummaryDto;
+import com.example.quiz_boot.modules.quiz.model.Category;
 import com.example.quiz_boot.modules.quiz.model.Quiz;
+import com.example.quiz_boot.modules.quiz.repository.CategoryRepository;
 import com.example.quiz_boot.modules.user.mapper.UserMapper;
+import com.example.quiz_boot.modules.user.model.User;
+import com.example.quiz_boot.modules.user.repository.UserRepository;
 
 /**
  * Simple mapper for Quiz entity and DTOs
@@ -30,6 +34,12 @@ public class QuizMapper {
   @Autowired
   private UserMapper userMapper;
 
+  @Autowired
+  private CategoryRepository categoryRepository;
+
+  @Autowired
+  private UserRepository userRepository;
+
   /**
    * Convert QuizCreateDto to Quiz entity
    */
@@ -37,6 +47,21 @@ public class QuizMapper {
     Quiz quiz = new Quiz();
     quiz.setTitle(dto.getTitle());
     quiz.setDescription(dto.getDescription());
+
+    // Set category entity
+    if (dto.getCategoryId() != null) {
+      Category category = categoryRepository.findById(dto.getCategoryId())
+          .orElseThrow(() -> new RuntimeException("Category not found with id: " + dto.getCategoryId()));
+      quiz.setCategory(category);
+    }
+
+    // Set creator entity
+    if (dto.getCreatorId() != null) {
+      User creator = userRepository.findById(dto.getCreatorId())
+          .orElseThrow(() -> new RuntimeException("User not found with id: " + dto.getCreatorId()));
+      quiz.setCreator(creator);
+    }
+
     quiz.setDuration(dto.getDuration());
     quiz.setPassingScore(dto.getPassingScore());
     quiz.setMaxAttempts(dto.getMaxAttempts());
@@ -130,5 +155,21 @@ public class QuizMapper {
     if (dto.getMaxAttempts() != null) {
       quiz.setMaxAttempts(dto.getMaxAttempts());
     }
+  }
+
+  /**
+   * Convert QuizResponseDto to QuizSummaryDto
+   * Used when we need to return a summary view of a detailed quiz response
+   */
+  public QuizSummaryDto toSummaryDto(QuizResponseDto responseDto) {
+    return new QuizSummaryDto(
+        responseDto.getId(),
+        responseDto.getTitle(),
+        responseDto.getDescription(),
+        responseDto.getCategory(),
+        responseDto.getDuration(),
+        responseDto.getPassingScore(),
+        responseDto.getQuestions() != null ? responseDto.getQuestions().size() : 0,
+        responseDto.getCreatedAt());
   }
 }
