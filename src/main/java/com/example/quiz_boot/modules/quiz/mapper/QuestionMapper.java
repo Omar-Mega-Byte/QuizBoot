@@ -11,6 +11,8 @@ import com.example.quiz_boot.modules.quiz.dto.request.QuestionUpdateDto;
 import com.example.quiz_boot.modules.quiz.dto.response.QuestionResponseDto;
 import com.example.quiz_boot.modules.quiz.dto.response.QuestionSummaryDto;
 import com.example.quiz_boot.modules.quiz.model.Question;
+import com.example.quiz_boot.modules.quiz.model.Quiz;
+import com.example.quiz_boot.modules.quiz.repository.QuizRepository;
 
 /**
  * Simple mapper for Question entity and DTOs
@@ -21,6 +23,9 @@ public class QuestionMapper {
 
   @Autowired
   private QuestionOptionMapper questionOptionMapper;
+  
+  @Autowired
+  private QuizRepository quizRepository;
 
   /**
    * Convert QuestionCreateDto to Question entity
@@ -33,6 +38,14 @@ public class QuestionMapper {
     question.setPoints(dto.getPoints());
     question.setExplanation(dto.getExplanation());
     question.setRequired(Boolean.TRUE.equals(dto.getIsRequired()));
+    
+    // Set the Quiz relationship by fetching the Quiz entity
+    if (dto.getQuizId() != null) {
+      Quiz quiz = quizRepository.findById(dto.getQuizId())
+          .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID: " + dto.getQuizId()));
+      question.setQuiz(quiz);
+    }
+    
     return question;
   }
 
