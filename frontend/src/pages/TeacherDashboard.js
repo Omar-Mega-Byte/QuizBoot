@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import authService from '../services/authService';
 import './Dashboard.css';
 
@@ -36,7 +36,7 @@ const TeacherDashboard = () => {
         <div className="dashboard-header">
           <h2>{isAdmin ? 'Admin' : 'Teacher'} Dashboard</h2>
           <p>
-            {isAdmin 
+            {isAdmin
               ? 'Manage the entire quiz platform and oversee all activities'
               : 'Create and manage quizzes, track student progress!'
             }
@@ -48,14 +48,24 @@ const TeacherDashboard = () => {
             <div className="card-icon">➕</div>
             <h3>Create Quiz</h3>
             <p>Design new quizzes with questions and answers</p>
-            <button className="card-button">Create New Quiz</button>
+            <button
+              className="card-button"
+              onClick={() => navigate('/quiz/create')}
+            >
+              Create Quiz
+            </button>
           </div>
 
           <div className="dashboard-card">
             <div className="card-icon">📋</div>
             <h3>My Quizzes</h3>
             <p>View and edit your existing quizzes</p>
-            <button className="card-button">Manage Quizzes</button>
+            <button
+              className="card-button"
+              onClick={() => navigate('/quiz')}
+            >
+              Manage Quizzes
+            </button>
           </div>
 
           <div className="dashboard-card">
@@ -70,6 +80,18 @@ const TeacherDashboard = () => {
             <h3>My Students</h3>
             <p>Manage your students and their progress</p>
             <button className="card-button">View Students</button>
+          </div>
+
+          <div className="dashboard-card">
+            <div className="card-icon">📁</div>
+            <h3>Categories</h3>
+            <p>Organize quizzes into different categories</p>
+            <button
+              className="card-button"
+              onClick={() => navigate('/categories')}
+            >
+              Manage Categories
+            </button>
           </div>
 
           {isAdmin && (

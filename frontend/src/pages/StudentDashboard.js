@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import authService from '../services/authService';
 import './Dashboard.css';
 
@@ -40,7 +40,12 @@ const StudentDashboard = () => {
             <div className="card-icon">📝</div>
             <h3>Available Quizzes</h3>
             <p>Browse and take quizzes created by your teachers</p>
-            <button className="card-button">View Quizzes</button>
+            <button
+              className="card-button"
+              onClick={() => navigate('/student/quizzes')}
+            >
+              Browse Quizzes
+            </button>
           </div>
 
           <div className="dashboard-card">
