@@ -23,7 +23,7 @@ public class QuestionMapper {
 
   @Autowired
   private QuestionOptionMapper questionOptionMapper;
-  
+
   @Autowired
   private QuizRepository quizRepository;
 
@@ -38,14 +38,14 @@ public class QuestionMapper {
     question.setPoints(dto.getPoints());
     question.setExplanation(dto.getExplanation());
     question.setRequired(Boolean.TRUE.equals(dto.getIsRequired()));
-    
+
     // Set the Quiz relationship by fetching the Quiz entity
     if (dto.getQuizId() != null) {
       Quiz quiz = quizRepository.findById(dto.getQuizId())
           .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID: " + dto.getQuizId()));
       question.setQuiz(quiz);
     }
-    
+
     return question;
   }
 

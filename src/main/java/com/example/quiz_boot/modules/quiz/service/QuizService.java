@@ -204,7 +204,7 @@ public class QuizService {
         }
 
         try {
-            List<Quiz> quizzes = quizRepository.findByIsCreatorId(creatorId);
+            List<Quiz> quizzes = quizRepository.findByCreatorId(creatorId);
             return quizMapper.toSummaryDtoList(quizzes);
         } catch (Exception e) {
             logger.error("AUDIT: Quizzes retrieval by creator failed due to database error: {}", e.getMessage());
@@ -254,7 +254,7 @@ public class QuizService {
         try {
             // Since repository doesn't have paginated method, we'll use a workaround
             // First get all quizzes by creator, then create a Page manually
-            List<Quiz> allQuizzes = quizRepository.findByIsCreatorId(creatorId);
+            List<Quiz> allQuizzes = quizRepository.findByCreatorId(creatorId);
 
             // Calculate pagination manually
             int start = (int) pageable.getOffset();
@@ -332,7 +332,7 @@ public class QuizService {
         }
 
         try {
-            return quizRepository.findByIsCreatorId(creatorId).size();
+            return quizRepository.findByCreatorId(creatorId).size();
         } catch (Exception e) {
             logger.error("Error counting quizzes for creator: {}", e.getMessage());
             return 0;

@@ -3,6 +3,7 @@ package com.example.quiz_boot.modules.shared.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -38,6 +39,13 @@ public class SecurityConfig {
                         // Allow public access to authentication endpoints
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // Allow public access to categories (needed for quiz creation forms)
+                        .requestMatchers("/api/categories", "/api/categories/all").permitAll()
+
+                        // Allow public access to GET quizzes (for testing - should be secured in
+                        // production)
+                        .requestMatchers(HttpMethod.GET, "/api/quizzes", "/api/quizzes/**").permitAll()
 
                         // Allow public access to health check and documentation
                         .requestMatchers("/actuator/health", "/api-docs/**", "/swagger-ui/**").permitAll()
