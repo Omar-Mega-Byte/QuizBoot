@@ -1,35 +1,35 @@
 # Spring Boot application.yaml for MySQL database
 spring:
-    datasource:
-        url: ${JDBC_URL:jdbc:h2:mem:quizboot;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
-        username: ${MYSQL_USER:sa}
-        password: ${MYSQL_PASSWORD:}
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true
-        properties:
-            hibernate:
-                format_sql: true
-    h2:
-        console:
-            enabled: true
-    profiles:
-        active: ${SPRING_PROFILES_ACTIVE:default}
+  datasource:
+    url: ${JDBC_URL:jdbc:h2:mem:quizboot;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${MYSQL_USER:sa}
+    password: ${MYSQL_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default}
 
 server:
-    port: ${SERVER_PORT:8080}
-    servlet:
-        context-path: ${SERVER_CONTEXT_PATH:/}
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: ${SERVER_CONTEXT_PATH:/}
 
 logging:
-    level:
-        root: INFO
-        org.springframework.web: DEBUG
-        org.hibernate: ERROR
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR
 
 # JWT Configuration
 app:
-    jwt:
-        secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationThatShouldBeAtLeast256BitsLong}
-        expirationMs: ${JWT_EXPIRATION_MS:86400000} # 24 hours
+  jwt:
+    secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationThatShouldBeAtLeast256BitsLong}
+    expirationMs: ${JWT_EXPIRATION_MS:86400000} # 24 hours
