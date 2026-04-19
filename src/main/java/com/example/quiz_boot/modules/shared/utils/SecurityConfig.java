@@ -48,7 +48,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/quizzes", "/api/quizzes/**").permitAll()
 
                         // Allow public access to health check and documentation
-                        .requestMatchers("/actuator/health", "/api-docs/**", "/swagger-ui/**").permitAll()
+                            .requestMatchers("/actuator/health", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
                         // Require authentication for all other endpoints
                         .anyRequest().authenticated())
